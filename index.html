@@ -117,18 +117,18 @@
                               <fieldset>
                                 <label>Select Translation</label>
                                 <select name="" id="edit-select"></select>
-                                <div class="row-fluid">
+                                <div id="edit-fields" class="row-fluid">
                                     <div class="span5">
                                         <label>English Word</label>
-                                        <input class="span12" type="text" placeholder="Type something…">
+                                        <input id="input-edit-english" class="span12" type="text" placeholder="Type something…" disabled>
                                     </div>
 
                                     <div class="span5 offset2">
                                         <label>Spanish Translation</label>
-                                        <input class="span12" type="text" placeholder="Type something…">
+                                        <input id="input-edit-spanish" class="span12" type="text" placeholder="Type something…" disabled>
                                     </div>
-                                    <a class="btn btn-primary disabled"><i class="icon-pencil icon-white"></i> Edit!</a>
-                                    <a type="submit" class="btn btn-danger disabled"><i class="icon-trash icon-white"></i> Delete!</a>
+                                    <a id="make-edit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Edit!</a>
+                                    <a id="edit-delete" class="btn btn-danger"><i class="icon-trash icon-white"></i> Delete!</a>
                                 </div>
                               </fieldset>
                             </form>
