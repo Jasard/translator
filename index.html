@@ -46,12 +46,10 @@
                     <div id="collapseOne" class="accordion-body collapse in">
                       <div class="accordion-inner">
                         <div class="row-fluid">
-
                             <p class="alert alert-info">Write an English word in the box on the left and hit submit, it's direct translation to Spanish will appear!</p>
-                            <div id="get-alert" class="alert alert-success fade hidden">
-                              <button type="button" class="close">&times;</button>
+                            <p id="get-alert" class="alert alert-success fade hidden">
                               <strong>Success!</strong> You should not see this text...
-                            </div>
+                            </p>
 
                             <form>
                               <fieldset>
@@ -62,7 +60,7 @@
 
                                 <div class="span5 offset2">
                                     <label>Spanish Translation</label>
-                                    <input id="input-get-spanish" class="span12" type="text" placeholder="Translation...">
+                                    <input id="input-get-spanish" class="span12" type="text" placeholder="Translation..." disabled>
                                 </div>
                                 <a id="get-tran" class="btn btn-primary btn-large"><i class="icon-search icon-white"></i> Go!</a>
                               </fieldset>
@@ -85,6 +83,7 @@
                       <div class="accordion-inner">
                         <div class="row-fluid">
                             <p class="alert alert-info">Write an English word in the box on the left, and it's direct translation to Spanish in the box on the right. Simple!</p>
+                            <p id="add-alert" class="alert fade hidden">Write an English word in the box on the left, and it's direct translation to Spanish in the box on the right. Simple!</p>
                             <form>
                               <fieldset>
                                 <div class="span5">
@@ -113,6 +112,7 @@
                       <div class="accordion-inner">
                         <div id="edit-tran" class="row-fluid">
                             <p class="alert alert-info">Write an English word in the box on the left, and it's direct translation to Spanish in the box on the right. Simple!</p>
+                            <p id="edit-alert" class="alert fade hidden">Write an English word in the box on the left, and it's direct translation to Spanish in the box on the right. Simple!</p>
                             <form>
                               <fieldset>
                                 <label>Select Translation</label>
