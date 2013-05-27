@@ -12,6 +12,7 @@
 
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery.easy-pie-chart.css">
         <link rel="stylesheet/less" type="text/css" href="css/main.less" />
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -55,19 +56,30 @@
                               <fieldset>
                                 <div class="span5">
                                     <label>English Word</label>
-                                    <input id="input-get-english" class="span12" type="text" placeholder="Type something…">
+                                    <textarea id="input-get-english" class="span12" type="text" placeholder="Type something…" rows="5"></textarea>
                                 </div>
 
                                 <div class="span5 offset2">
                                     <label>Spanish Translation</label>
-                                    <input id="input-get-spanish" class="span12" type="text" placeholder="Translation..." disabled>
+                                    <textarea id="input-get-spanish" class="span12" type="text" placeholder="Translation..." readonly rows="5"></textarea>
                                 </div>
                                 <a id="get-tran" class="btn btn-primary btn-large"><i class="icon-search icon-white"></i> Go!</a>
                               </fieldset>
                             </form>
-                            <div class="row-fluid">
-                                <a type="button" class="btn btn-small btn-info" data-toggle="collapse" data-target="#demo"><i class="icon-signal icon-white"></i> View Statistics</a>
-                                <div id="demo" class="collapse margin-bottom">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, quam, nostrum, deserunt, aliquid vel quasi ex obcaecati reiciendis culpa ipsum maiores sed suscipit voluptatem nesciunt dolore consectetur pariatur blanditiis dignissimos?</div>
+                            <div id="statistics" class="row-fluid">
+                                <button type="button" class="btn btn-small btn-info" data-toggle="collapse" data-target="#statistics-body" disabled><i class="icon-signal icon-white"></i> Toggle Statistics</button>
+                                <div id="statistics-body" class="collapse margin-bottom stats">
+                                    <div class="chart pull-left" data-percent="0"><span>0%</span></div>
+                                    <div class="pull-left span7">
+                                        <h4>Statistics of last successful translation:</h4>
+                                        <dl class="dl-horizontal">
+                                          <dt># Words Translated:</dt>
+                                            <dd id="words-translated">0</dd>
+                                          <dt>Couldnt Translate:</dt>
+                                            <dd id="not-translated">All words were translated successfully!</dd>
+                                        </dl>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                       </div>
@@ -151,6 +163,7 @@
         <script src="js/vendor/backbone-min.js"></script>
         <script src="js/vendor/backbone.localStorage-min.js"></script>
         <script src="js/vendor/backbone-query.min.js"></script>
+        <script src="js/vendor/jquery.easy-pie-chart.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>

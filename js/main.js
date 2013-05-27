@@ -31,6 +31,11 @@ $(function(){
       Translations.fetch();
       Translations.toJSON(); // Fetch collection and put in to JSON format.
       this.updateSelect();
+
+      $('.chart').easyPieChart({
+          animate: 3000,
+          barColor: '#e8846b'
+      });
     },
 
     showAlert: function(el, type, msg) {
@@ -95,26 +100,34 @@ $(function(){
     getItem: function() {
       var searchEnglish = $('#input-get-english').val().toLowerCase();
       searchEnglish = searchEnglish.replace(/[^a-z ]+/gi,'');
-      var words = searchEnglish.split(' '
+      var words = searchEnglish.split(' ');
       var spanish = [];
-      var noTrans = true;
+      var noTrans = [];
+      var successes = 0;
 
       if (searchEnglish) {
         $.each(words, function(index, value) {
           var search = Translations.find(function(model) { return model.get('english') == words[index]; });
           if (search) {
             spanish.push(search.get('spanish'));
-            noTrans = false;
+            successes++;
           } else {
             spanish.push(words[index]);
+            noTrans.push(words[index]);
           }
         });
         $('#input-get-spanish').val(spanish.join(" "));
-        if (noTrans) {
+        if (successes === 0) {
           App.showAlert("#get-alert", "alert-error", "<strong>Unsuccessful</strong> No words could be translated.");
           $('#input-get-spanish').val('');
         } else {
           App.showAlert("#get-alert", "alert-success", "<strong>Success</strong> Translated to Spanish.");
+          var per = Math.round((successes/spanish.length)*100);
+          $('.chart span').text(per+"%");
+          $('.chart').data('easyPieChart').update(per);
+          if (per != 100) {$('#not-translated').text(noTrans.join(", "));}
+          $('#words-translated').text(successes + '/' + spanish.length);
+          $("#statistics button").prop('disabled', false);
         }
       } else {
         $('#input-get-spanish').val('');
