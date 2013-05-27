@@ -112,6 +112,10 @@ $(function(){
       var spanish = [];
       var noTrans = [];
       var successes = 0;
+      var notTrans = $('#not-translated');
+      var chartSpan = $('.chart span');
+      var chart = $('.chart');
+      var wordsTrans = $('#words-translated');
 
       if (searchEnglish) {
         $.each(words, function(index, value) {
@@ -128,13 +132,18 @@ $(function(){
         if (successes === 0) {
           App.showAlert("#get-alert", "alert-error", "<strong>Unsuccessful</strong> No words could be translated.");
           $('#input-get-spanish').val('');
+          notTrans.text(noTrans.join(", "));
+          chartSpan.text("0%");
+          chart.data('easyPieChart').update(0);
+          wordsTrans.text('0/' + spanish.length);
         } else {
           App.showAlert("#get-alert", "alert-success", "<strong>Success</strong> Translated to Spanish.");
           var per = Math.round((successes/spanish.length)*100);
-          $('.chart span').text(per+"%");
-          $('.chart').data('easyPieChart').update(per);
-          if (per != 100) {$('#not-translated').text(noTrans.join(", "));}
-          $('#words-translated').text(successes + '/' + spanish.length);
+          chartSpan.text(per+"%");
+          chart.data('easyPieChart').update(per);
+          notTrans.text("All words were translated successfully!");
+          if (per != 100) {notTrans.text(noTrans.join(", "));}
+          wordsTrans.text(successes + '/' + spanish.length);
           $("#statistics button").prop('disabled', false);
         }
       } else {
