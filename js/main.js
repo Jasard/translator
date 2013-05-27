@@ -22,28 +22,34 @@ $(function(){
     events: {
       'click #add-tran': 'insertItem', // Listen to when Add button is pressed.
       'click #get-tran': 'getItem', // Listen to when Add button is pressed.
-      'change #edit-select': 'selectorChange',
-      'click #edit-delete': 'deleteEdit',
-      'click #make-edit': 'makeEdit'
+      'change #edit-select': 'selectorChange', // Listen to when option is selected.
+      'click #edit-delete': 'deleteEdit', // Listen to delete button.
+      'click #make-edit': 'makeEdit' // Listen to edit button.
     },
 
    initialize: function () {
       Translations.fetch();
       Translations.toJSON(); // Fetch collection and put in to JSON format.
-      this.updateSelect();
+      this.updateSelect(); // Do initial render for select.
 
+      // Init pie chart.
       $('.chart').easyPieChart({
           animate: 3000,
           barColor: '#e8846b'
       });
     },
 
+    // Show alert.
+    // @param el The element to be shown.
+    // @param type The class to apply to element.
+    // @param msg The message to show in the alert.
     showAlert: function(el, type, msg) {
       var theElement = $(el);
       theElement.html(msg).removeClass("hidden alert-error alert-success").fadeIn().addClass("in "+type);
       setTimeout(function(){theElement.addClass("hidden").removeClass("in");}, 5000);
     },
 
+    // Update <select> with collection.
     updateSelect: function() {
       var editSelect = $('#edit-select');
       var editFieldsInput = $('#edit-fields input');
@@ -62,6 +68,7 @@ $(function(){
       editFieldsA.addClass('disabled');
     },
 
+    // Add new translation to collection.
     insertItem: function (e) {
       var inputEnglish = $('#input-add-english'), inputSpanish = $('#input-add-spanish');
       var newEnglish = inputEnglish.val(), newSpanish = inputSpanish.val();
@@ -97,6 +104,7 @@ $(function(){
       inputSpanish.val('');
     },
 
+    // Search for translation.
     getItem: function() {
       var searchEnglish = $('#input-get-english').val().toLowerCase();
       searchEnglish = searchEnglish.replace(/[^a-z ]+/gi,'');
@@ -135,6 +143,7 @@ $(function(){
       }
     },
 
+    // Detect change in <select>.
     selectorChange: function() {
       var selectVal = $('#edit-select option:selected').val();
       var editModel = this.collection.findWhere({english: selectVal});
@@ -144,6 +153,7 @@ $(function(){
       $('#edit-fields a').removeClass('disabled');
     },
 
+    // Delete translation.
     deleteEdit: function() {
       var selectVal = $('#edit-select option:selected').val();
       var editModel = this.collection.findWhere({english: selectVal});
@@ -154,6 +164,7 @@ $(function(){
       }
     },
 
+    // Edit translation.
     makeEdit: function() {
       var selectVal = $('#edit-select option:selected').val();
       var editModel = this.collection.findWhere({english: selectVal});
