@@ -60,6 +60,7 @@ $(function(){
     insertItem: function (e) {
       var inputEnglish = $('#input-add-english'), inputSpanish = $('#input-add-spanish');
       var newEnglish = inputEnglish.val(), newSpanish = inputSpanish.val();
+
       var search = Translations.find(function(model) { return model.get('english') == newEnglish; });
 
       if (/\s/g.test(newEnglish) || /\s/g.test(newSpanish)) {
@@ -69,6 +70,8 @@ $(function(){
       } else if (search) {
         this.showAlert("#add-alert", "alert-error", "<strong>Unsuccessful</strong> Word already exists in dictionary.");
       } else {
+        newEnglish = newEnglish.replace(/[^a-z]+/gi,'').toLowerCase();
+        newSpanish = newSpanish.replace(/[^a-z]+/gi,'').toLowerCase();
         // Create new Translation object and add to collection.
         newTranslation = new Translation({
           english: newEnglish,
@@ -90,15 +93,28 @@ $(function(){
     },
 
     getItem: function() {
-      var searchEnglish = $('#input-get-english').val();
+      var searchEnglish = $('#input-get-english').val().toLowerCase();
+      searchEnglish = searchEnglish.replace(/[^a-z ]+/gi,'');
+      var words = searchEnglish.split(' '
+      var spanish = [];
+      var noTrans = true;
+
       if (searchEnglish) {
-        var search = Translations.find(function(model) { return model.get('english') == searchEnglish; });
-        if (search) {
-          $('#input-get-spanish').val(search.get('spanish'));
-          this.showAlert("#get-alert", "alert-success", "<strong>Success</strong> Translated to Spanish.");
-        } else {
+        $.each(words, function(index, value) {
+          var search = Translations.find(function(model) { return model.get('english') == words[index]; });
+          if (search) {
+            spanish.push(search.get('spanish'));
+            noTrans = false;
+          } else {
+            spanish.push(words[index]);
+          }
+        });
+        $('#input-get-spanish').val(spanish.join(" "));
+        if (noTrans) {
+          App.showAlert("#get-alert", "alert-error", "<strong>Unsuccessful</strong> No words could be translated.");
           $('#input-get-spanish').val('');
-          this.showAlert("#get-alert", "alert-error", "<strong>Unsuccessful</strong> Word not found in dictionary.");
+        } else {
+          App.showAlert("#get-alert", "alert-success", "<strong>Success</strong> Translated to Spanish.");
         }
       } else {
         $('#input-get-spanish').val('');
@@ -136,6 +152,8 @@ $(function(){
       } else if (!editEnglish || !editSpanish) {
         this.showAlert("#edit-alert", "alert-error", "<strong>Unsuccessful</strong> Make sure you enter a word in each field!");
       } else {
+        editEnglish = editEnglish.replace(/[^a-z]+/gi,'').toLowerCase();
+        editSpanish = editSpanish.replace(/[^a-z]+/gi,'').toLowerCase();
         editModel.set({english: editEnglish, spanish: editSpanish});
         editModel.save();
         this.updateSelect();
